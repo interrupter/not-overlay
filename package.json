@@ -1,6 +1,6 @@
 {
     "name": "not-overlay",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "not-* family overlay plugin",
     "main": "index.js",
     "repository": "git@github.com:interrupter/not-overlay.git",
