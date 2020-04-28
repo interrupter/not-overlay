@@ -7,7 +7,7 @@ const connect = require('connect'),
 function runTests(){
   	return new Promise((res, rej) => {
   		try {
-  			exec(`./node_modules/.bin/cypress open`, {}, (err, stdout) => {
+  			exec(`./node_modules/.bin/cypress run`, {}, (err, stdout) => {
           console.log(stdout);
   					if (err) {
   						rej(err);

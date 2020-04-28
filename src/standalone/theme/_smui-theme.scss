@@ -1,21 +1,28 @@
 // Nothing here. Just use the default theme.
 @import "@material/theme/color-palette";
-
 // Svelte Colors!
 $mdc-theme-primary: #4a90e2;
-$mdc-theme-secondary: #e2844a;
-// Other Svelte color: #40b3ff
-
+$mdc-theme-secondary: #e2844a; // Other Svelte color: #40b3ff
 //$mdc-theme-background: #fff;
 //$mdc-theme-surface: #fff;
 
-.close-btn{
-  position: absolute;
+.close-btn {
+  position: absolute!important;
   right: 25px;
   top: 25px;
 }
 
-  	.pull-right{
-  		display: block;
-  		float:right;
-  	}
+.pull-right {
+  display: block;
+  float: right;
+}
+
+.not-overlay-show {
+  display: block!important;
+  opacity: 1!important;
+  animation-name: animateOpacity;
+  animation-duration: 0.6s;
+  animation-iteration-count: 1;
+  animation-timing-function: steps(28);
+  animation-fill-mode: forwards;
+}

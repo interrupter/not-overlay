@@ -4,10 +4,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Order UI testing</title>
+	<title>Overlay UI testing</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="/assets/order/notOverlay.css">
+	<link rel="stylesheet" href="/assets/overlay/notOverlay.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
@@ -15,12 +15,32 @@
 </head>
 
 <body>
-	<div id="notOverlay"></div>
+	<button id="create-overlay">Create Overlay with Close Button</button>
+	<button id="create-overlay-w-btn">Create Overlay without Close Button</button>
 	<script src="/assets/overlay/notOverlay.js"></script>
 	<script>
-		document.addEventListener('DOMContentLoaded', () => {
-			notOverlay.OverlayComponent()
+	function showOverlay(btn){
+		let comp = new notOverlay.OverlayComponent({
+			target: document.body,
+			props: {
+				closeButton: btn
+			}
 		});
+		comp.$on('resolve', (data)=>{
+			comp.$destroy();
+			console.log('overlay resolved', data.detail);
+		});
+		comp.$on('reject', (data)=>{
+			comp.$destroy();
+			console.log('overlay rejected', data.detail);
+		});
+	}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelector('body button#create-overlay').addEventListener('click', () => showOverlay(true));
+			document.querySelector('body button#create-overlay-w-btn').addEventListener('click', () => showOverlay(false));
+		});
+
 	</script>
 </body>
 
