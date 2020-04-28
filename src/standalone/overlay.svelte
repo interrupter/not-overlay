@@ -1,7 +1,7 @@
 {#if show}
 <div class="not-overlay" transition:fade>
 	{#if closeButton}
-	<IconButton on:click={closeOverlay} class="close-btn">
+	<IconButton on:click={closeButtonClick} class="close-btn">
 		<Icon class="material-icons">close</Icon>
 	</IconButton>
 	{/if}
@@ -34,8 +34,14 @@
 	export let show = true;
 	export let closeOnClick = true;
 
-	function closeOverlay() {
+	function closeButtonClick(){
 		rejectOverlay();
+	}
+
+	function closeOverlay(e) {
+		if(e.originalTarget && e.originalTarget.classList.contains('not-overlay')){
+			rejectOverlay();
+		}
 	}
 
 	function rejectOverlay(data = {}) {
@@ -47,22 +53,20 @@
 	}
 
 	onMount(() => {
-		console.log('mounted');
-
 		overflowSave = document.body.style.overflow;
 		document.body.style.overflow = 'hidden';
 
 		let el = document.body.querySelector('.not-overlay');
 		if(closeOnClick){
 			el.addEventListener('click', closeOverlay);
-		}		
+		}
 		if (show) {
 			el.classList.add('not-overlay-show');
 		}
+
 	});
 
 	onDestroy(() => {
-		console.log('unmounted');
 		document.body.style.overflow = overflowSave;
 	});
 </script>

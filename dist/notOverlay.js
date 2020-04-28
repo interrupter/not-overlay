@@ -2623,8 +2623,8 @@ var notOverlay = (function (exports) {
     	let div_transition;
     	let current;
     	let if_block = /*closeButton*/ ctx[0] && create_if_block_1(ctx);
-    	const default_slot_template = /*$$slots*/ ctx[8].default;
-    	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[9], null);
+    	const default_slot_template = /*$$slots*/ ctx[9].default;
+    	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[10], null);
 
     	return {
     		c() {
@@ -2672,8 +2672,8 @@ var notOverlay = (function (exports) {
     			}
 
     			if (default_slot) {
-    				if (default_slot.p && dirty & /*$$scope*/ 512) {
-    					default_slot.p(get_slot_context(default_slot_template, ctx, /*$$scope*/ ctx[9], null), get_slot_changes(default_slot_template, /*$$scope*/ ctx[9], dirty, null));
+    				if (default_slot.p && dirty & /*$$scope*/ 1024) {
+    					default_slot.p(get_slot_context(default_slot_template, ctx, /*$$scope*/ ctx[10], null), get_slot_changes(default_slot_template, /*$$scope*/ ctx[10], dirty, null));
     				}
     			}
     		},
@@ -2717,7 +2717,7 @@ var notOverlay = (function (exports) {
     			}
     		});
 
-    	iconbutton.$on("click", /*closeOverlay*/ ctx[2]);
+    	iconbutton.$on("click", /*closeButtonClick*/ ctx[2]);
 
     	return {
     		c() {
@@ -2730,7 +2730,7 @@ var notOverlay = (function (exports) {
     		p(ctx, dirty) {
     			const iconbutton_changes = {};
 
-    			if (dirty & /*$$scope*/ 512) {
+    			if (dirty & /*$$scope*/ 1024) {
     				iconbutton_changes.$$scope = { dirty, ctx };
     			}
 
@@ -2768,7 +2768,7 @@ var notOverlay = (function (exports) {
     	};
     }
 
-    // (4:1) <IconButton on:click={closeOverlay} class="close-btn">
+    // (4:1) <IconButton on:click={closeButtonClick} class="close-btn">
     function create_default_slot(ctx) {
     	let current;
 
@@ -2791,7 +2791,7 @@ var notOverlay = (function (exports) {
     		p(ctx, dirty) {
     			const icon_changes = {};
 
-    			if (dirty & /*$$scope*/ 512) {
+    			if (dirty & /*$$scope*/ 1024) {
     				icon_changes.$$scope = { dirty, ctx };
     			}
 
@@ -2874,8 +2874,14 @@ var notOverlay = (function (exports) {
     	let { show = true } = $$props;
     	let { closeOnClick = true } = $$props;
 
-    	function closeOverlay() {
+    	function closeButtonClick() {
     		rejectOverlay();
+    	}
+
+    	function closeOverlay(e) {
+    		if (e.originalTarget && e.originalTarget.classList.contains("not-overlay")) {
+    			rejectOverlay();
+    		}
     	}
 
     	function rejectOverlay(data = {}) {
@@ -2887,7 +2893,6 @@ var notOverlay = (function (exports) {
     	}
 
     	onMount(() => {
-    		console.log("mounted");
     		overflowSave = document.body.style.overflow;
     		document.body.style.overflow = "hidden";
     		let el = document.body.querySelector(".not-overlay");
@@ -2902,7 +2907,6 @@ var notOverlay = (function (exports) {
     	});
 
     	onDestroy(() => {
-    		console.log("unmounted");
     		document.body.style.overflow = overflowSave;
     	});
 
@@ -2912,16 +2916,17 @@ var notOverlay = (function (exports) {
     		if ("closeButton" in $$props) $$invalidate(0, closeButton = $$props.closeButton);
     		if ("show" in $$props) $$invalidate(1, show = $$props.show);
     		if ("closeOnClick" in $$props) $$invalidate(3, closeOnClick = $$props.closeOnClick);
-    		if ("$$scope" in $$props) $$invalidate(9, $$scope = $$props.$$scope);
+    		if ("$$scope" in $$props) $$invalidate(10, $$scope = $$props.$$scope);
     	};
 
     	return [
     		closeButton,
     		show,
-    		closeOverlay,
+    		closeButtonClick,
     		closeOnClick,
     		overflowSave,
     		dispatch,
+    		closeOverlay,
     		rejectOverlay,
     		resolveOverlay,
     		$$slots,
