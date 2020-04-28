@@ -1,15 +1,23 @@
-<div class="not-overlay">
+{#if show}
+<div class="not-overlay" transition:fade>
 	{#if closeButton}
 	<IconButton on:click={closeOverlay} class="close-btn">
 		<Icon class="material-icons">close</Icon>
 	</IconButton>
 	{/if}
 	<main>
-			<slot></slot>
-	</main>	
+		<slot></slot>
+	</main>
 </div>
+{/if}
 
 <script>
+	let overflowSave = '';
+
+	import {
+		fade
+	} from 'svelte/transition';
+
 	import {
 		createEventDispatcher,
 		onMount,
@@ -22,34 +30,40 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let closeButton = true;
+	export let closeButton = false;
 	export let show = true;
+	export let closeOnClick = true;
 
 	function closeOverlay() {
 		rejectOverlay();
 	}
 
-	function rejectOverlay(data = {}){
+	function rejectOverlay(data = {}) {
 		dispatch('reject', data);
 	}
 
-	function resolveOverlay(data = {}){
+	function resolveOverlay(data = {}) {
 		dispatch('resolve', data);
 	}
 
 	onMount(() => {
 		console.log('mounted');
-		document.body.classList.add('overlayed');
+
+		overflowSave = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+
 		let el = document.body.querySelector('.not-overlay');
-		el.addEventListener('click', closeOverlay);
-		if(show){
+		if(closeOnClick){
+			el.addEventListener('click', closeOverlay);
+		}		
+		if (show) {
 			el.classList.add('not-overlay-show');
 		}
 	});
 
 	onDestroy(() => {
 		console.log('unmounted');
-		document.body.classList.remove('overlayed');
+		document.body.style.overflow = overflowSave;
 	});
 </script>
 
@@ -64,24 +78,8 @@
 		margin: 0px;
 		background-color: #CCC;
 		z-index: 1000;
-		display: none;
-		opacity: 0;
-		overflow: hidden;
-	}
-
-	@keyframes animateOpacity {
-		0% {
-			opacity: 0;
-		}
-		50% {
-			opacity: 0.7;
-		}
-		100% {
-			opacity: 1;
-		}
-	}
-
-	body.overlayed {
+		display: block;
+		opacity: 1;
 		overflow: hidden;
 	}
 </style>

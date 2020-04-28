@@ -1,7 +1,6 @@
 const connect = require('connect'),
   path = require('path'),
-  serveStatic = require('serve-static'),
-  ncp = require('ncp').ncp,
+  serveStatic = require('serve-static'),  
   exec = require('child_process').exec;
 
 function startServer(){
@@ -10,10 +9,4 @@ function startServer(){
   });
 }
 
-ncp(path.join(__dirname,'../dist'), path.join(__dirname,'browser/dist'), function (err) {
- if (err) {
-   console.error(err);
-   process.exit(1);
- }
- startServer();
-});
+startServer();

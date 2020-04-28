@@ -19,11 +19,12 @@
 	<button id="create-overlay-w-btn">Create Overlay without Close Button</button>
 	<script src="/assets/overlay/notOverlay.js"></script>
 	<script>
-	function showOverlay(btn){
+	function showOverlay(closeButton, closeOnClick){
 		let comp = new notOverlay.OverlayComponent({
 			target: document.body,
 			props: {
-				closeButton: btn
+				closeButton,
+				closeOnClick
 			}
 		});
 		comp.$on('resolve', (data)=>{
@@ -37,8 +38,8 @@
 	}
 
 		document.addEventListener('DOMContentLoaded', () => {
-			document.querySelector('body button#create-overlay').addEventListener('click', () => showOverlay(true));
-			document.querySelector('body button#create-overlay-w-btn').addEventListener('click', () => showOverlay(false));
+			document.querySelector('body button#create-overlay').addEventListener('click', () => showOverlay(true, false));
+			document.querySelector('body button#create-overlay-w-btn').addEventListener('click', () => showOverlay(false, true));
 		});
 
 	</script>
