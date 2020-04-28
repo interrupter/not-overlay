@@ -1,0 +1,21 @@
+// Nothing here. Just use the default theme.
+@import "@material/theme/color-palette";
+
+// Svelte Colors!
+$mdc-theme-primary: #4a90e2;
+$mdc-theme-secondary: #e2844a;
+// Other Svelte color: #40b3ff
+
+//$mdc-theme-background: #fff;
+//$mdc-theme-surface: #fff;
+
+.close-btn{
+  position: absolute;
+  right: 25px;
+  top: 25px;
+}
+
+  	.pull-right{
+  		display: block;
+  		float:right;
+  	}
