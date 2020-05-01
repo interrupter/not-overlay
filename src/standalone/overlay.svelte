@@ -1,5 +1,5 @@
 {#if show}
-<div class="not-overlay" transition:fade>
+<div class="not-overlay" transition:fade on:click={overlayClick}>
 	{#if closeButton}
 	<IconButton on:click={closeButtonClick} class="close-btn">
 		<Icon class="material-icons">close</Icon>
@@ -21,6 +21,7 @@
 	import {
 		createEventDispatcher,
 		onMount,
+		onAfterUpdate,
 		onDestroy
 	} from 'svelte';
 
@@ -33,6 +34,18 @@
 	export let closeButton = false;
 	export let show = true;
 	export let closeOnClick = true;
+
+	$: if(show){
+		document.body.style.overflow = 'hidden';
+	}else{
+		document.body.style.overflow = overflowSave;
+	}
+
+	function overlayClick(e){
+		if(closeOnClick){
+			closeOverlay(e);
+		}
+	}
 
 	function closeButtonClick(){
 		rejectOverlay();
@@ -54,21 +67,12 @@
 
 	onMount(() => {
 		overflowSave = document.body.style.overflow;
-		document.body.style.overflow = 'hidden';
-
-		let el = document.body.querySelector('.not-overlay');
-		if(closeOnClick){
-			el.addEventListener('click', closeOverlay);
-		}
-		if (show) {
-			el.classList.add('not-overlay-show');
-		}
-
 	});
 
 	onDestroy(() => {
 		document.body.style.overflow = overflowSave;
 	});
+
 </script>
 
 
