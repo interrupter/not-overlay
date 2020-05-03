@@ -6,13 +6,14 @@ import {
   eslint
 } from 'rollup-plugin-eslint';
 import postcss from 'rollup-plugin-postcss';
+import sass from 'node-sass'
 import filesize from 'rollup-plugin-filesize';
 import istanbul from 'rollup-plugin-istanbul';
 import resolve from "rollup-plugin-node-resolve";
 
 
 export default {
-  input: 'src/standalone/overlay.js',
+  input: 'src/standalone/index.js',
   output: {
     name: 'notOverlay',
     format: 'iife',
@@ -29,7 +30,15 @@ export default {
     }),
     commonjs(),
     postcss({
+      preprocessor: (content, id) => new Promise((resolve, reject) => {
+        const result = sass.renderSync({ file: id });
+        console.log('id',id);
+        resolve({ code: result.css.toString() })
+      }),
       extract: true,
+      plugins: [
+
+      ],
       minimize: true,
       use: [
         ['sass', {
