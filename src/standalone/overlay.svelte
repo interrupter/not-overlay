@@ -5,9 +5,7 @@
 		<Icon class="material-icons">close</Icon>
 	</IconButton>
 	{/if}
-	<main>
-		<slot></slot>
-	</main>
+	<slot></slot>
 </div>
 {/if}
 
@@ -21,7 +19,6 @@
 	import {
 		createEventDispatcher,
 		onMount,
-		onAfterUpdate,
 		onDestroy
 	} from 'svelte';
 
