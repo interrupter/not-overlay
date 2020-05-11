@@ -75,14 +75,14 @@
 
 <style>
 	.not-overlay {
-		position: absolute;
+		position: fixed;
 		top: 0px;
 		left: 0px;
 		width: 100vw;
 		height: 100vh;
 		margin: 0px;
 		background-color: #CCC;
-		z-index: 1000;
+		z-index: 2000;
 		display: block;
 		opacity: 1;
 		overflow: hidden;

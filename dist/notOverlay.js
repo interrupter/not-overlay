@@ -2632,7 +2632,7 @@ var notOverlay = (function (exports) {
     			if (if_block) if_block.c();
     			t = space();
     			if (default_slot) default_slot.c();
-    			attr(div, "class", "not-overlay svelte-1y5np01");
+    			attr(div, "class", "not-overlay svelte-15dptf1");
     		},
     		m(target, anchor, remount) {
     			insert(target, div, anchor);
